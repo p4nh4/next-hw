@@ -26,9 +26,11 @@ const Navbar = (movies) => {
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/popular">Popular</a></li>
-                        <li><a class="dropdown-item" href="/now_playing">Now Playing</a></li>
-                       
+                        <li><a class="dropdown-item" href="/now_playing">Now Playing</a></li>  
                     </ul>
+                    </li>
+                    <li class="nav-item">
+                    <a className={router.pathname == "/product" ? "nav-link active" : "nav-link"} aria-current="page" href="/product">Product</a>
                     </li>
 
                 </ul>

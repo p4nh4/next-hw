@@ -36,33 +36,37 @@ export default function Product({}) {
             </> 
         }
     ];
-    const Products = async () => {
+    const getProd = async () => {
+        
         const response = await axios.get(`https://api.escuelajs.co/api/v1/products/`)
         setProduct(response.data)
-        setfilterProd(response.data)
-        console.log(product)}
+        setFilterProd(response.data)
+        console.log(product)
+    }
+    useEffect(() => {
+        getProd();
+    },[])
     const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
-    const [filterProd ,setfilterProd] = useState([]);
+
+    const [filterProd ,setFilterProd] = useState([]);
     const [product, setProduct] = useState([])
 
-    const [rec , setRec] = useState();
-    function handleFilter(event)
-    {
-        const searchData = filterProd.filter(row => 
-            {
-                return row.title.toLowercase().includes(event.target.value.toLowercase())
-            })
-            setRec(searchData)
+    const [search , setSearch] = useState(" ");
+    useEffect(() => {
+        const searchData = product.filter(products => {
+          return products.title.toLowerCase().match(search.toLowerCase());
+        });
+        setFilterProd(searchData);
+    },[search])
 
-    }
-   
-
+    
   return (
     <Layout>
       <Head>
         <title>PROD</title>
       </Head>
 <main className={`${styles.main} ${inter.className}`}>
+
     <div className='container'>
     <div className="card">
         <DataTable
@@ -77,7 +81,10 @@ export default function Product({}) {
               <input type='text'
                placeholder='Search'
                 className='form-control w-50'
-                onChange={handleFilter}/>
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                
+               />
             }>
         </DataTable>
         </div>
